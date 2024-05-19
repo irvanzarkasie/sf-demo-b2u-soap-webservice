@@ -1,11 +1,10 @@
 import logging
-from spyne import Application, rpc, ServiceBase, \
-    String, Long
+from spyne import Application, rpc, ServiceBase, String, Long
 from spyne.protocol.soap import Soap11
 from spyne.server.wsgi import WsgiApplication
 from spyne.model.complex import ComplexModel, Array
 
-logging.basicConfig(level="WARNING")
+logging.basicConfig(level="INFO")
 
 class routeModel(ComplexModel):
     departureCode = String
@@ -25,7 +24,7 @@ class GetRoutesService(ServiceBase):
     @rpc(getRoutes, _body_style='bare', _returns=getRoutesResponse)
     def receiveEvents(ctx, req):
         print(req)
-        return getRoutesResponse(routes = [] )
+        return getRoutesResponse(routes = [])
     # end def
 # end class
 
