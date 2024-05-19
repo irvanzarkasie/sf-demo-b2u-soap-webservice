@@ -8,8 +8,6 @@ import uuid
 import socket
 from datetime import datetime, timedelta
 import os
-import jwt
-from cryptography.x509 import load_pem_x509_certificate
 
 app = Flask(__name__)
 
