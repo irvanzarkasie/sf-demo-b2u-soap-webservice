@@ -7,31 +7,30 @@ from spyne.model.complex import ComplexModel, Array
 
 logging.basicConfig(level="WARNING")
 
-class event(ComplexModel):
-    eid = String
-    eventMessage = String
-    eventSeverity = String
-    eventTime = Long
-    eventTypeName = String
-    meterId = String
+class routeModel(ComplexModel):
+    departureCode = String
+    destinationCode = String
+# end class
 
-class eventQueryResult(ComplexModel):
-    queryId = String
-    queryStatus = String
-    events = Array(event)
+class getRoutes(ComplexModel):
+    departureCode = String
+    destinationCode = String
+# end class
 
-class someResponse(ComplexModel):
-    eventIds = Array(String)
+class getRoutesResponse(ComplexModel):
+    routes = Array(routeModel)
+# end class
 
-class EventPushService(ServiceBase):
-    @rpc(eventQueryResult, _body_style='bare', _returns=someResponse)
+class GetRoutesService(ServiceBase):
+    @rpc(getRoutes, _body_style='bare', _returns=getRoutesResponse)
     def receiveEvents(ctx, req):
         print(req)
+        return getRoutesResponse(routes = [] )
+    # end def
+# end class
 
-        return someResponse(eventIds = [ i.eid for i in req.events ] )
-
-application = Application([EventPushService],
-    tns='http://pushevent.nbapi.cgms.cisco.com/',
+application = Application([GetRoutesService],
+    tns='http://www.example.org/Bookings/',
     in_protocol=Soap11(validator='lxml'),
     out_protocol=Soap11()
 )
@@ -43,6 +42,7 @@ if __name__ == '__main__':
 
     from wsgiref.simple_server import make_server
     wsgi_app = WsgiApplication(application)
-    server = make_server('0.0.0.0', 8000, wsgi_app)
+    server = make_server('0.0.0.0', 38000, wsgi_app)
     server.serve_forever()
+# end if
 
