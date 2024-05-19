@@ -6,6 +6,20 @@ from spyne.model.complex import ComplexModel, Array
 
 logging.basicConfig(level="INFO")
 
+DEP_CODE_LIST = [
+    "MY-Z1001",
+    "MY-Z1002",
+    "SG-S1001",
+    "SG-S1002"
+]
+
+DEST_CODE_LIST = [
+    "MY-Z1001",
+    "MY-Z1002",
+    "SG-S1001",
+    "SG-S1002"
+]
+
 class routeModel(ComplexModel):
     departureCode = String
     destinationCode = String
@@ -22,14 +36,14 @@ class getRoutesResponse(ComplexModel):
 
 class GetRoutesService(ServiceBase):
     @rpc(getRoutes, _body_style='bare', _returns=getRoutesResponse)
-    def receiveEvents(ctx, req):
+    def receiveGetRoutesReq(ctx, req):
         print(req)
         return getRoutesResponse(routes = [])
     # end def
 # end class
 
 application = Application([GetRoutesService],
-    tns='http://www.example.org/Bookings/',
+    book='http://www.example.org/Bookings/',
     in_protocol=Soap11(validator='lxml'),
     out_protocol=Soap11()
 )
