@@ -43,7 +43,7 @@ class GetRoutesService(ServiceBase):
 # end class
 
 application = Application([GetRoutesService],
-    book='http://www.example.org/Bookings/',
+    tns='http://www.example.org/Bookings/',
     in_protocol=Soap11(validator='lxml'),
     out_protocol=Soap11()
 )
