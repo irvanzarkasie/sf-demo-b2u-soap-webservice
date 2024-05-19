@@ -36,7 +36,7 @@ class getRoutesResponse(ComplexModel):
 
 class GetRoutesService(ServiceBase):
     @rpc(getRoutes, _body_style='bare', _returns=getRoutesResponse)
-    def receiveGetRoutesReq(ctx, req):
+    def getRoutes(ctx, req):
         print(req)
         return getRoutesResponse(routes = [])
     # end def
